@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title Girl Talk
+  %body
+    #wrapper
+      .container
+        #header
+        #content
+          -flash.each do |name, msg|
+            =content_tag :div, msg, :id => "flash_#{name}"
+          =yield
+        #footer

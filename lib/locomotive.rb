@@ -26,7 +26,6 @@ require 'locomotive/hosting'
 module Locomotive
 
   extend Locomotive::Hosting::Heroku
-  extend Locomotive::Hosting::Bushido
   extend Locomotive::Hosting::Default
 
   class << self
@@ -112,8 +111,6 @@ module Locomotive
     # Heroku support
     self.enable_heroku if self.heroku?
 
-    # Bushido support
-    self.enable_bushido if self.bushido?
   end
 
   def self.define_subdomain_and_domains_options
@@ -121,8 +118,7 @@ module Locomotive
       self.config.manage_subdomain = self.config.manage_domains = true
     else
       # Note: (Did) modify the code below if Locomotive handles a new hosting solution (not a perfect solution though)
-      self.config.manage_domains = self.heroku? || self.bushido?
-      self.config.manage_subdomain = self.bushido?
+      self.config.manage_domains = self.heroku?
     end
   end
 

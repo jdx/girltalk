@@ -1,5 +1,9 @@
-# Locomotive::Application.routes.draw do |map|
 Rails.application.routes.draw do
+
+  devise_for :users, :controllers => { :omniauth_callbacks => 'users/omniauth_callbacks' }
+  devise_scope :user do
+    get '/users/auth/:provider' => 'users/omniauth_callbacks#passthru'
+  end
 
   # admin authentication
   devise_for :admin, :class_name => 'Account', :controllers => { :sessions => 'admin/sessions', :passwords => 'admin/passwords' }
@@ -64,7 +68,9 @@ Rails.application.routes.draw do
   match '/robots.txt' => 'admin/robots#show', :format => 'txt'
 
   # magic urls
-  match '/' => 'admin/rendering#show'
-  match '*path/edit' => 'admin/rendering#show', :defaults => { :editing => true }
-  match '*path' => 'admin/rendering#show'
+  match '/' => 'application#home'
+  match '*path/edit' => 'application#home', :defaults => { :editing => true }
+  match '*path' => 'application#home'
+
+  root :to => 'application#home'
 end
